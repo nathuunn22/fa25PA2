@@ -28,20 +28,31 @@ int main() {
     // Step 1: Read file and count letter frequencies
     buildFrequencyTable(freq, "input.txt");
 
+    // for (int i = 0; i < 26; i++) {
+    //     cout << freq[i] << " ";
+    // }
+
+
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
+    //
+    // for (int i = 0; i < MAX_NODES; i++) {
+    //     cout << weightArr[i] << " ";
+    // }
 
-    // Step 3: Build encoding tree using your heap
+    //
+    // // Step 3: Build encoding tree using your heap
+
     int root = buildEncodingTree(nextFree);
-
-    // Step 4: Generate binary codes using an STL stack
-    string codes[26];
-    generateCodes(root, codes);
-
-    // Step 5: Encode the message and print output
-    encodeMessage("input.txt", codes);
-
-    return 0;
+    //
+    // // Step 4: Generate binary codes using an STL stack
+    // string codes[26];
+    // generateCodes(root, codes);
+    //
+    // // Step 5: Encode the message and print output
+    // encodeMessage("input.txt", codes);
+    //
+    // return 0;
 }
 
 /*------------------------------------------------------
@@ -91,7 +102,16 @@ int createLeafNodes(int freq[]) {
 int buildEncodingTree(int nextFree) {
     // TODO:
     // 1. Create a MinHeap object.
+    MinHeap heap;
     // 2. Push all leaf node indices into the heap.
+    for (int i = 0; i < nextFree; i++) {
+        if (charArr[i]) {
+            heap.push(i, weightArr);
+            heap.upheap(i, weightArr);
+        }
+    }
+
+    heap.print(charArr);
     // 3. While the heap size is greater than 1:
     //    - Pop two smallest nodes
     //    - Create a new parent node with combined weight
