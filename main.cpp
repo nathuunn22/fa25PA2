@@ -106,7 +106,7 @@ int buildEncodingTree(int nextFree) {
     MinHeap heap;
     // 2. Push all leaf node indices into the heap.
     for (int i = 0; i < nextFree; i++) {
-        if (weightArr[i] >) 0 {
+        if (weightArr[i] > 0) {
             heap.push(i, weightArr);
         }
     }

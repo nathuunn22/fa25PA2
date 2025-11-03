@@ -16,13 +16,19 @@ struct MinHeap {
 
     void push(int const idx, int const weightArr[]) {
         // TODO: insert index at end of heap, restore order using upheap()
+        if (size >= 64) {
+            return;
+        }
         data[size] = idx;
-        upheap(size, weightArr);
         size++;
+        upheap(size - 1, weightArr);
     }
 
     int pop(int const weightArr[]) {
         // TODO: remove and return smallest index
+        if (size == 0) {
+            return -1;
+        }
         int const temp = data[0];
         data[0] = data[size - 1];
         size--;
@@ -37,12 +43,16 @@ struct MinHeap {
             return;
         }
 
-        int parentPos = (pos-1)/2;
-        while (weightArr[data[parentPos]] > weightArr[data[pos]] && parentPos > 0) {
-            swap(parentPos, pos);
-            pos = parentPos;
-            parentPos = (pos-1)/2;
+        while (pos > 0) {
+            int parent = (pos - 1) / 2;
+            if (weightArr[data[pos]] < weightArr[data[parent]]) {
+                swap(pos, parent);
+                pos = parent;
+            } else {
+                break;
+            }
         }
+
     }
 
     void downheap(int pos, int const weightArr[]) {
