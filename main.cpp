@@ -40,14 +40,15 @@ int main() {
     //     cout << weightArr[i] << " ";
     // }
 
-    //
+
     // // Step 3: Build encoding tree using your heap
 
     int root = buildEncodingTree(nextFree);
-    //
-    // // Step 4: Generate binary codes using an STL stack
-    // string codes[26];
-    // generateCodes(root, codes);
+
+    // Step 4: Generate binary codes using an STL stack
+    string codes[26];
+    generateCodes(root, codes);
+
     //
     // // Step 5: Encode the message and print output
     // encodeMessage("input.txt", codes);
@@ -105,7 +106,7 @@ int buildEncodingTree(int nextFree) {
     MinHeap heap;
     // 2. Push all leaf node indices into the heap.
     for (int i = 0; i < nextFree; i++) {
-        if (charArr[i]) {
+        if (weightArr[i] >) 0 {
             heap.push(i, weightArr);
         }
     }
@@ -117,11 +118,11 @@ int buildEncodingTree(int nextFree) {
         int smallestTwo = heap.pop(weightArr);
         //    - Create a new parent node with combined weight
         int combinedWeight = weightArr[smallestOne] + weightArr[smallestTwo];
-        charArr[nextFree] = 'a' + combinedWeight;
+        charArr[nextFree] = '\0';
         weightArr[nextFree] = combinedWeight;
         //    - Set left/right pointers
-        leftArr[nextFree] = -1;
-        rightArr[nextFree] = -1;
+        leftArr[nextFree] = smallestOne;
+        rightArr[nextFree] = smallestTwo;
         nextFree++;
         //    - Push new parent index back into the heap
         heap.push(nextFree - 1, weightArr);
@@ -134,6 +135,7 @@ int buildEncodingTree(int nextFree) {
 void generateCodes(int root, string codes[]) {
     // TODO:
     // Use stack<pair<int, string>> to simulate DFS traversal.
+
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
 }
