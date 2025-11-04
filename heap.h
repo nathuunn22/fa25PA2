@@ -38,9 +38,6 @@ struct MinHeap {
 
 
     void upheap(int pos, int const weightArr[]) {
-        if (size <= 1) {
-            return;
-        }
         while (pos > 0) {
             int parent = (pos - 1) / 2;
             if (weightArr[data[pos]] < weightArr[data[parent]]) {
@@ -54,25 +51,24 @@ struct MinHeap {
     }
 
     void downheap(int pos, int const weightArr[]) {
-        int leftChildPos = 2*pos+1;
-        int rightChildPos = 2*pos+2;
         while (true) {
-            if (pos >= size || leftChildPos >= size || rightChildPos >= size) {
-                return;
+            int leftChildPos = 2 * pos + 1;
+            int rightChildPos = 2 * pos + 2;
+            int smallest = pos;
+
+            if (leftChildPos < size && weightArr[data[leftChildPos]] < weightArr[data[smallest]]) {
+                smallest = leftChildPos;
+            }
+            if (rightChildPos < size && weightArr[data[rightChildPos]] < weightArr[data[smallest]]) {
+                smallest = rightChildPos;
+            }
+            if (smallest == pos) {
+                break;
             }
 
-            if (weightArr[data[pos]] > weightArr[data[leftChildPos]]) {
-                swap(leftChildPos, pos);
-                pos = leftChildPos;
-            } else if (weightArr[data[pos] > weightArr[data[rightChildPos]]]) {
-                swap(rightChildPos, pos);
-                pos = rightChildPos;
-            }
-
-            leftChildPos = 2*pos+1;
-            rightChildPos = 2*pos+2;
+            swap(pos, smallest);
+            pos = smallest;
         }
-
     }
 
     //helper swap function
