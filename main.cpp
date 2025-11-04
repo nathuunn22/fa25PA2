@@ -28,31 +28,21 @@ int main() {
     // Step 1: Read file and count letter frequencies
     buildFrequencyTable(freq, "input.txt");
 
-    // for (int i = 0; i < 26; i++) {
-    //     cout << freq[i] << " ";
-    // }
-
-
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
-    //
-    // for (int i = 0; i < MAX_NODES; i++) {
-    //     cout << weightArr[i] << " ";
-    // }
 
-
-    // // Step 3: Build encoding tree using your heap
+    // Step 3: Build encoding tree using your heap
 
     int root = buildEncodingTree(nextFree);
 
     // Step 4: Generate binary codes using an STL stack
     string codes[26];
     generateCodes(root, codes);
-    //
-    // // Step 5: Encode the message and print output
+
+    // Step 5: Encode the message and print output
     encodeMessage("input.txt", codes);
 
-    // return 0;
+    return 0;
 }
 
 /*------------------------------------------------------
@@ -100,7 +90,6 @@ int createLeafNodes(int freq[]) {
 
 // Step 3: Build the encoding tree using heap operations
 int buildEncodingTree(int nextFree) {
-    // TODO:
     // 1. Create a MinHeap object.
     MinHeap heap;
     // 2. Push all leaf node indices into the heap.
@@ -132,7 +121,6 @@ int buildEncodingTree(int nextFree) {
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
-    // TODO:
     // Use stack<pair<int, string>> to simulate DFS traversal.
     if (root == -1) {
         return;
@@ -148,6 +136,8 @@ void generateCodes(int root, string codes[]) {
         int nodeIndex = current.first;
         string code = current.second;
 
+        // Left edge adds '0', right edge adds '1'.
+        // Record code when a leaf node is reached.
         if (leftArr[nodeIndex] == -1 && rightArr[nodeIndex] == -1) {
             int charIndex = charArr[nodeIndex] - 'a';
             codes[charIndex] = code;
@@ -160,8 +150,6 @@ void generateCodes(int root, string codes[]) {
             }
         }
     }
-    // Left edge adds '0', right edge adds '1'.
-    // Record code when a leaf node is reached.
 }
 
 // Step 5: Print table and encoded message
